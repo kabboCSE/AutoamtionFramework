@@ -23,7 +23,7 @@ public class LoginTest extends BaseDriver{
 		PageDriver.getCurrentDriver().manage().window().maximize();
 		PageDriver.getCurrentDriver().get(url);
 		report = ExtentFactory.getInstance();
-		parentTest = report.createTest("<p style=\"color:#FF6000; font-size:20px\"><b>LOGIN</b></p>").assignAuthor("QA TEAM").assignDevice("Windows 10");
+		parentTest = report.createTest("<p style=\"color:#FF6000; font-size:20px\"><b>LOGIN</b></p>").assignAuthor("LoginModule").assignDevice("Windows 10");
 		
 	}
 	
