@@ -7,4 +7,4 @@
 			<class name="com.it.bd.tests.DashboardTest" /> 
 		</classes>	
 	</test>
-</suite>
+</suite> 

@@ -1,23 +1,32 @@
 package com.it.bd.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.it.bd.drivers.PageDriver;
 import com.it.bd.utilities.CommonMethods;
+import com.it.bd.utilities.GetScreenShot;
+
+import junit.framework.Assert;
 
 public class LoginPage extends CommonMethods{
 	
-	public LoginPage() {
-		
-		/*
-		 * 1. PageFactory init
-		 * 2. Locators
-		 * 3. Function
-		 */
+	/*
+	 * 1. PageFactory init
+	 * 2. Locators
+	 * 3. Function
+	 */
+	
+	ExtentTest test;
+	public LoginPage(ExtentTest test) {				
 		PageFactory.initElements(PageDriver.getCurrentDriver(), this);
+		this.test = test; 
 	}
 	
 	@FindBys({
@@ -37,15 +46,23 @@ public class LoginPage extends CommonMethods{
 	})
 	WebElement login;
 	
-	public void login() throws InterruptedException {
+	public void login() throws InterruptedException, IOException {
 		timeout();   
 		try {
 			if(username.isDisplayed()) {
 				username.sendKeys("Admin");
-				timeout();
+				timeout(); 
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			test.fail("<p style=\"color:#FF5353; font-size:13px\"><b>Username is not locateable.Please check the error message.</b></p>");
+			Throwable t = new InterruptedException("Exception");
+			test.fail(t);
+			@SuppressWarnings("unused")
+			String screenShotPath = GetScreenShot.capture(PageDriver.getCurrentDriver(), "usernameLocator");
+			String dest = System.getProperty("user.dir") + "\\screenshots\\" + "usernameLocator.png";
+			test.fail(MediaEntityBuilder.createScreenCaptureFromPath(dest).build());
+			Assert.assertTrue(username.isDisplayed());
+			PageDriver.getCurrentDriver().quit();
 		}
 		try {
 			if(password.isDisplayed()) {
@@ -53,16 +70,37 @@ public class LoginPage extends CommonMethods{
 				timeout();
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			test.fail("<p style=\"color:#FF5353; font-size:13px\"><b>Password is not locateable.Please check the error message.</b></p>");
+			Throwable t = new InterruptedException("Exception");
+			test.fail(t);
+			@SuppressWarnings("unused")
+			String screenShotPath = GetScreenShot.capture(PageDriver.getCurrentDriver(), "passwordLocator");
+			String dest = System.getProperty("user.dir") + "\\screenshots\\" + "passwordLocator.png";
+			test.fail(MediaEntityBuilder.createScreenCaptureFromPath(dest).build());
+			Assert.assertTrue(password.isDisplayed());
+			PageDriver.getCurrentDriver().quit();
 		}
 		
 		try {
 			if(login.isDisplayed()) {
 				login.click();
 				timeout();
+				test.pass("<p style=\"color:#85BC63; font-size:13px\"><b>You have successfully logged in.</b></p>");
+				@SuppressWarnings("unused")
+				String screenShotPath = GetScreenShot.capture(PageDriver.getCurrentDriver(), "loginPass");
+				String dest = System.getProperty("user.dir") + "\\screenshots\\" + "LoginPass.png";
+				test.pass(MediaEntityBuilder.createScreenCaptureFromPath(dest).build());
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			test.fail("<p style=\"color:#FF5353; font-size:13px\"><b>Password is not locateable.Please check the error message.</b></p>");
+			Throwable t = new InterruptedException("Exception");
+			test.fail(t);
+			@SuppressWarnings("unused")
+			String screenShotPath = GetScreenShot.capture(PageDriver.getCurrentDriver(), "loginButtonLocator");
+			String dest = System.getProperty("user.dir") + "\\screenshots\\" + "loginButtonLocator.png";
+			test.fail(MediaEntityBuilder.createScreenCaptureFromPath(dest).build());
+			Assert.assertTrue(login.isDisplayed());
+			PageDriver.getCurrentDriver().quit();
 		}
 	}
 
