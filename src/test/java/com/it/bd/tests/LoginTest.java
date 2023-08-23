@@ -11,6 +11,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.it.bd.drivers.BaseDriver;
 import com.it.bd.drivers.PageDriver;
 import com.it.bd.pages.LoginPage;
+import com.it.bd.utilities.DataSet;
 import com.it.bd.utilities.ExtentFactory;
 
 public class LoginTest extends BaseDriver{	
@@ -31,9 +32,21 @@ public class LoginTest extends BaseDriver{
 	public void loginTest() throws InterruptedException, IOException {
 		childTest = parentTest.createNode("<p style=\"color:#3E96E7; font-size:20px\"><b>LOGIN TEST</b></p>");
 		LoginPage loginPage = new LoginPage(childTest);
-		loginPage.login();
+		loginPage.login("admin", "admin123");
 	}
 	
+//	@Test(priority = 0, dataProvider = "invalidCredentials", dataProviderClass = DataSet.class)
+//	public void loginTestwithInvalidcredentials(String username, String password) throws InterruptedException, IOException {
+//		childTest = parentTest.createNode("<p style=\"color:#3E96E7; font-size:20px\"><b>LOGIN TEST</b></p>");
+//		LoginPage loginPage = new LoginPage(childTest);
+//		loginPage.login(username, password);
+		
+		@Test(priority = 0, dataProvider = "invalidLoginDataFromExcel", dataProviderClass = DataSet.class)
+		public void loginTestwithInvalidcredentials(String username, String password) throws InterruptedException, IOException {
+			childTest = parentTest.createNode("<p style=\"color:#3E96E7; font-size:20px\"><b>LOGIN TEST</b></p>");
+			LoginPage loginPage = new LoginPage(childTest);
+			loginPage.login(username, password);
+	}
 	@AfterClass
 	public void afterClass() {
 		report.flush();

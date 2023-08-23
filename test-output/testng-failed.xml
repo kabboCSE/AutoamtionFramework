@@ -3,6 +3,15 @@
 <suite name="Failed suite [Automaiton]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="LoginTest(failed)">
     <classes>
+      <class name="com.it.bd.tests.LoginTest">
+        <methods>
+          <include name="close"/>
+          <include name="loginTestwithInvalidcredentials" invocation-numbers="0 1 2"/>
+          <include name="afterClass"/>
+          <include name="Start"/>
+          <include name="openUrl"/>
+        </methods>
+      </class> <!-- com.it.bd.tests.LoginTest -->
       <class name="com.it.bd.tests.DashboardTest">
         <methods>
           <include name="close"/>

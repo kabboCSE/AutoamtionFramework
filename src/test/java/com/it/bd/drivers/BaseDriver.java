@@ -1,6 +1,7 @@
 package com.it.bd.drivers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterSuite;
@@ -15,17 +16,22 @@ public class BaseDriver {
 	@BeforeSuite
 	public void Start() {
 		String browser = System.getProperty("browser", "chrome");
+		
 
-		if (browser.contains("chrome")) {
-			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
-		} else if (browser.contains("firefox")) {
-			WebDriverManager.firefoxdriver().setup();
-			driver = new FirefoxDriver();
-		} else {
+		if (browser.contains("edge")) {
 			WebDriverManager.edgedriver().setup();
 			driver = new EdgeDriver();
+		} else if (browser.contains("chrome")) {
+			//To use your local chrome session
+//			ChromeOptions options = new ChromeOptions();	       
+//	        options.addArguments("--user-data-dir=C:\\Kabbo\\USER\\AppData\\Local\\Google\\Chrome for Testing\\User Data");
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+		} else {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
 		}
+		
 		PageDriver.getInstance().setDriver(driver);
 	}
 
